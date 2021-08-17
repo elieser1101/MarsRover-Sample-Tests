@@ -57,7 +57,12 @@ type MarsRover struct {
 	status Status
 }
 
-func (r MarsRover) turnLeft() {
+func (r *MarsRover) turnLeft() {
+    if r.heading == 0 {
+        r.heading = 3
+    } else {
+        r.heading -= 1
+    }
 
 }
 
@@ -65,15 +70,34 @@ func (r MarsRover) currentLocation() interface{} {
 	return ""
 }
 
-func (r MarsRover) acceptCommands(commands []Command) {
-
+func (r *MarsRover) acceptCommands(commands []Command) {
+    for _, c := range commands {
+        switch c {
+            case L:
+                r.turnLeft()
+            case R:
+                r.turnRight()
+            case F:
+                r.forward()
+        }
+	}
 }
 
-func (r MarsRover) coordinates() Coordinates {
-	return Coordinates{0, 0}
+func (r *MarsRover) coordinates() Coordinates {
+	return r.position
 }
 
-func (r MarsRover) forward() {
+func (r *MarsRover) forward() {
+        switch r.heading {
+            case N:
+                r.position.y += 1
+            case S:
+                r.position.y -= 1
+            case E:
+                r.position.x += 1
+            case W:
+                r.position.x -= 1
+        }
 
 }
 
@@ -82,5 +106,10 @@ func (r MarsRover) backward() {
 }
 
 func (r MarsRover) turnRight() {
+    if r.heading == 3 {
+        r.heading = 0
+    } else {
+        r.heading += 1
+    }
 
 }

@@ -7,12 +7,12 @@ import (
 
 func TestReceiveSingleCommandShouldMove(t *testing.T) {
 	plateau := Plateau{maxX: 5, maxY: 5}
-	startingPosition := Coordinates{1,9}
-	marsRover := MarsRover{plateau: plateau, heading: N, position: startingPosition}
+	startingPosition := Coordinates{1,8}
+	marsRover := &MarsRover{plateau: plateau, heading: N, position: startingPosition}
 
-	commands := []Command{B}
+	commands := []Command{F}
 	marsRover.acceptCommands(commands)
 
-	expectedPosition := Coordinates{1,8}
+	expectedPosition := Coordinates{1,9}
 	assert.Equal(t, expectedPosition, marsRover.coordinates())
 }
