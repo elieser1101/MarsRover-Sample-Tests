@@ -17,4 +17,8 @@ func TestCanRotateLeft(t *testing.T) {
 	marsRover.turnLeft()
 
 	assert.Equal(t, W, marsRover.heading)
+
+	marsRover.turnRight()
+	marsRover.turnRight()
+	assert.Equal(t, E, marsRover.heading)
 }

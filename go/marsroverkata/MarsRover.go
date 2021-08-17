@@ -1,5 +1,9 @@
 package marsrover
 
+import (
+	"fmt"
+)
+
 type Coordinates struct {
 	x int
 	y int
@@ -66,8 +70,8 @@ func (r *MarsRover) turnLeft() {
 
 }
 
-func (r MarsRover) currentLocation() interface{} {
-	return ""
+func (r *MarsRover) currentLocation() interface{} {
+	return fmt.Sprintf("%d %d %s", r.position.x, r.position.y, r.heading.String())
 }
 
 func (r *MarsRover) acceptCommands(commands []Command) {
@@ -79,6 +83,8 @@ func (r *MarsRover) acceptCommands(commands []Command) {
                 r.turnRight()
             case F:
                 r.forward()
+            case B:
+                r.backward()
         }
 	}
 }
@@ -101,11 +107,21 @@ func (r *MarsRover) forward() {
 
 }
 
-func (r MarsRover) backward() {
+func (r *MarsRover) backward() {
+        switch r.heading {
+            case N:
+                r.position.y -= 1
+            case S:
+                r.position.y += 1
+            case E:
+                r.position.x -= 1
+            case W:
+                r.position.x += 1
+        }
 
 }
 
-func (r MarsRover) turnRight() {
+func (r *MarsRover) turnRight() {
     if r.heading == 3 {
         r.heading = 0
     } else {
