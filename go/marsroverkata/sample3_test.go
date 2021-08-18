@@ -13,5 +13,5 @@ func TestFollowInstructions(t *testing.T) {
 	commands := []Command{B, F, L, F, F, R}
 	marsRover.acceptCommands(commands)
 
-	assert.Equal(t, "-1 2 N", marsRover.currentLocation())
+	assert.Equal(t, "0 2 N", marsRover.currentLocation())
 }

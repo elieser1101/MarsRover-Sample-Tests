@@ -23,7 +23,7 @@ func TestFollowAllInstructions(t *testing.T) {
 			marsRover.turnRight()
 		}
 	}
-	expectedPosition := Coordinates{-1,2}
+	expectedPosition := Coordinates{0,2}
 	assert.Equal(t, expectedPosition, marsRover.coordinates())
 	assert.Equal(t, N, marsRover.heading)
 }

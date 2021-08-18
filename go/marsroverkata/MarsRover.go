@@ -2,6 +2,7 @@ package marsrover
 
 import (
 	"fmt"
+    "strconv"
 )
 
 type Coordinates struct {
@@ -19,6 +20,10 @@ const (
 )
 func (d Direction) String() string {
 	return [...]string{"N", "E", "S", "W"}[d]
+}
+
+func (d Direction) ArrowString() string {
+	return [...]string{"^", ">", "v", "<"}[d]
 }
 
 type Command int
@@ -75,6 +80,8 @@ func (r *MarsRover) currentLocation() interface{} {
 }
 
 func (r *MarsRover) acceptCommands(commands []Command) {
+    fmt.Println("started at")
+    r.currentLocation()
     for _, c := range commands {
         switch c {
             case L:
@@ -86,6 +93,7 @@ func (r *MarsRover) acceptCommands(commands []Command) {
             case B:
                 r.backward()
         }
+        r.printTerrain()
 	}
 }
 
@@ -96,13 +104,21 @@ func (r *MarsRover) coordinates() Coordinates {
 func (r *MarsRover) forward() {
         switch r.heading {
             case N:
-                r.position.y += 1
+                if r.plateau.maxY > r.position.y {
+                    r.position.y += 1
+                }
             case S:
-                r.position.y -= 1
+                if r.position.y > 0{
+                    r.position.y -= 1
+                }
             case E:
-                r.position.x += 1
+                if r.plateau.maxX > r.position.x {
+                    r.position.x += 1
+                }
             case W:
-                r.position.x -= 1
+                if r.position.x > 0{
+                    r.position.x -= 1
+                }
         }
 
 }
@@ -128,4 +144,28 @@ func (r *MarsRover) turnRight() {
         r.heading += 1
     }
 
+}
+
+
+func (r *MarsRover) printTerrain() {
+    xAxis := ""
+    stepSeparator := ""
+	for i := 0; i < r.plateau.maxX; i++ {
+        line := ""
+        line = line + strconv.Itoa(r.plateau.maxX - 1 - i)
+        for j := 0; j < r.plateau.maxY; j++ {
+            if i == 0 {
+                xAxis = xAxis + strconv.Itoa(j) + "\t"
+                stepSeparator = stepSeparator + "#######"
+            }
+            if i == r.position.y && j == r.position.x {
+                line = line + "[" + r.heading.ArrowString() + "]\t"
+            } else {
+                line = line + "*\t"
+            }
+        }
+	    fmt.Println(line)
+    }
+    fmt.Println(xAxis)
+    fmt.Println(stepSeparator)
 }

@@ -6,7 +6,7 @@ import (
 )
 
 func TestReceiveSingleCommandShouldMove(t *testing.T) {
-	plateau := Plateau{maxX: 5, maxY: 5}
+	plateau := Plateau{maxX: 10, maxY: 10}
 	startingPosition := Coordinates{1,8}
 	marsRover := &MarsRover{plateau: plateau, heading: N, position: startingPosition}
 

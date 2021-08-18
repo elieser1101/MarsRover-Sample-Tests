@@ -11,7 +11,7 @@ func TestReceiveCommands(t *testing.T) {
 	startingPosition := Coordinates{1,2}
 	marsRover := MarsRover{plateau: plateau, heading: N, position: startingPosition}
 
-	forward := rand.Intn(10)
+	forward := rand.Intn(5)
 	for i := 0; i < forward; i++ {
 		marsRover.forward()
 	}
